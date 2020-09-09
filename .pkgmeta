@@ -23,7 +23,7 @@ externals:
 
 embedded-libraries:
   - libaddonutils
-  - libaddongui
+  # - libaddongui
 
 ignore:
   - Libs/*.md

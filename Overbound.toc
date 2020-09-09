@@ -25,4 +25,3 @@ Locales\Locale-enUS.lua
 Core.lua
 Bindings.lua
 Frame.lua
-

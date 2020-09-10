@@ -1,10 +1,16 @@
+#@retail@
 ## Interface: 90001
+#@end-retail@
+#@non-retail@
+## Interface: 11304
+#@end-non-retail@
 ## Title: Overbound
 ## Notes: Override key binding manager.
 ## Author: Nikketa-Hyjal-US
-## Version: 1.0
+## Version: @project-version@
 ## SavedVariables: OverboundDB
 ## X-Curse-Project-ID: 407138
+## X-WoWI-ID: 25670
 
 # Libraries
 Libs\LibStub\LibStub.lua

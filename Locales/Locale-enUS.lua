@@ -13,7 +13,6 @@ L["Editor"] = true
 L["Function"] = true
 L["Global"] = true
 L["Item"] = true
-L["Load on Startup"] = true
 L["Macro"] = true
 L["Macrotext"] = true
 L["New"] = true

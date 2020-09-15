@@ -54,8 +54,6 @@ function addon:DrawEditorFrame()
     editor:SetSize(frame:GetWidth(), frame:GetHeight())
     editor:Hide()
 
-    editor.startupEnabled = {"MACROTEXT", "MACRO", "FUNCTION"}
-
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     local typeLabel = editor:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -65,17 +63,11 @@ function addon:DrawEditorFrame()
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-    local commandPreviewIcon, commandPreviewIcon, commandEditBox, startupCheck
+    local commandPreviewIcon, commandPreviewIcon, commandEditBox
     local typeDropDown = GUI:CreateDropDown(editor, {
         width = 150,
         SetValue = function(self, selected)
             editor:UpdateCommandPreviews(selected, commandEditBox:GetText())
-            if not tContains(editor.startupEnabled, selected) then
-                startupCheck:SetChecked(false)
-                startupCheck:Disable()
-            else
-                startupCheck:Enable()
-            end
         end,
         menu = {
             ACTION = {
@@ -112,11 +104,6 @@ function addon:DrawEditorFrame()
     keybindButton:SetPoint("TOPLEFT", typeLabel, "BOTTOMLEFT", 0, -20)
     keybindButton:SetSize(150, 25)
     keybindButton:Disable()
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-    startupCheck = GUI:CreateCheckButton(editor, {label = L["Load on Startup"]})
-    startupCheck:SetPoint("LEFT", keybindButton, "RIGHT", 10, 0)
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -196,7 +183,6 @@ function addon:DrawEditorFrame()
         keybindButton.isRecording = false
         keybindButton:EnableKeyboard(false)
         keybindButton:SetText(L["Not Bound"])
-        startupCheck:SetChecked(false)
         commandPreviewIcon:SetNormalTexture("")
         commandPreviewLabel:SetText("")
         commandEditBox:SetText("")
@@ -210,7 +196,6 @@ function addon:DrawEditorFrame()
         self.isEditing = false
         typeDropDown.Button:Disable()
         keybindButton:Disable()
-        startupCheck:Disable()
         commandEditBox:Disable()
     end
 
@@ -220,10 +205,6 @@ function addon:DrawEditorFrame()
         self.isEditing = true
         typeDropDown.Button:Enable()
         keybindButton:Enable()
-        local bindData = self.bind and addon.db[frame.scrollFrame.scope].binds[self.bind]
-        if not self.bind or (bindData and tContains(editor.startupEnabled, bindData.bindType)) then
-            startupCheck:Enable()
-        end
         commandEditBox:Enable()
     end
 
@@ -242,11 +223,6 @@ function addon:DrawEditorFrame()
         typeDropDown:SetValue(bindData.bindType)
         keybindButton:SetText(bind)
 
-        -- Have to enable it to set checked
-        startupCheck:Enable()
-        startupCheck:SetChecked(bindData.loadOnStartup and true or false)
-        startupCheck:Disable()
-
         editor:UpdateCommandPreviews(bindData.bindType, bindData.command)
 
         commandEditBox:SetText(bindData.command)
@@ -264,11 +240,10 @@ function addon:DrawEditorFrame()
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-    function editor:SaveBind(bind, bindType, command, loadOnStartup)
+    function editor:SaveBind(bind, bindType, command)
         addon.db[frame.scrollFrame.scope].binds[bind] = {
             bindType = bindType,
             command = command,
-            loadOnStartup = loadOnStartup,
         }
 
         frame.scrollFrame:LoadBinds(frame.scrollFrame.scope)
@@ -294,7 +269,6 @@ function addon:DrawEditorFrame()
 
         local bindType = typeDropDown.selected
         local command = commandEditBox:GetText()
-        local loadOnStartup = startupCheck:GetChecked()
 
         local valid, err = addon:ValidateBindings(bindType, command)
 
@@ -312,7 +286,7 @@ function addon:DrawEditorFrame()
                 end
             end
 
-            editor:SaveBind(bind, bindType, command, loadOnStartup)
+            editor:SaveBind(bind, bindType, command)
 
             return true
         else

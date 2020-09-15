@@ -18,18 +18,6 @@ end
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-function addon:LoadStartupBindings()
-    for k, v in pairs(self.db.global) do
-
-    end
-
-    for k, v in pairs(self.db.char) do
-
-    end
-end
-
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
 function addon:SetBinding(bind, data)
     self.numMacros = self.numMacros or 0
     if data.bindType == "MACROTEXT" or data.bindType == "FUNCTION" then

@@ -13,6 +13,7 @@ L["Editor"] = true
 L["Function"] = true
 L["Global"] = true
 L["Item"] = true
+L["Load on Startup"] = true
 L["Macro"] = true
 L["Macrotext"] = true
 L["New"] = true
@@ -25,6 +26,9 @@ L["Spell"] = true
 L["Type"] = true
 L["Update"] = true
 L["Yes"] = true
+L.OverwriteConfirmation = function()
+    return "The bind \"%s\" already exists. Do you want to overwrite?"
+end
 
 L.Tooltips = function(tip)
     local tips = {

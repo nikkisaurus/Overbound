@@ -106,6 +106,12 @@ function addon:DrawEditorFrame()
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+    local startupCheck = GUI:CreateCheckButton(editor, {label = L["Load on Startup"]})
+    startupCheck:SetPoint("LEFT", keybindButton, "RIGHT", 10, 0)
+
+
+    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
     commandPreviewIcon = GUI:CreateIcon(editor, {})
     commandPreviewIcon:SetPoint("TOPLEFT", keybindButton, "BOTTOMLEFT", 0, -10)
     commandPreviewIcon:SetSize(15, 15)
@@ -182,6 +188,7 @@ function addon:DrawEditorFrame()
         keybindButton.isRecording = false
         keybindButton:EnableKeyboard(false)
         keybindButton:SetText(L["Not Bound"])
+        startupCheck:SetChecked(false)
         commandPreviewIcon:SetNormalTexture("")
         commandPreviewLabel:SetText("")
         commandEditBox:SetText("")
@@ -195,6 +202,7 @@ function addon:DrawEditorFrame()
         self.isEditing = false
         typeDropDown.Button:Disable()
         keybindButton:Disable()
+        startupCheck:Disable()
         commandEditBox:Disable()
     end
 
@@ -204,6 +212,7 @@ function addon:DrawEditorFrame()
         self.isEditing = true
         typeDropDown.Button:Enable()
         keybindButton:Enable()
+        startupCheck:Enable()
         commandEditBox:Enable()
     end
 
@@ -221,6 +230,7 @@ function addon:DrawEditorFrame()
 
         typeDropDown:SetValue(bindData.bindType)
         keybindButton:SetText(bind)
+        startupCheck:SetChecked(bindData.loadOnStartup)
 
         editor:UpdateCommandPreviews(bindData.bindType, bindData.command)
 
@@ -239,10 +249,11 @@ function addon:DrawEditorFrame()
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-    function editor:SaveBind(bind, bindType, command)
+    function editor:SaveBind(bind, bindType, command, loadOnStartup)
         addon.db[frame.scrollFrame.scope].binds[bind] = {
             bindType = bindType,
             command = command,
+            loadOnStartup = loadOnStartup,
         }
 
         frame.scrollFrame:LoadBinds(frame.scrollFrame.scope)
@@ -259,7 +270,6 @@ function addon:DrawEditorFrame()
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     function editor:ValidateBind()
-        -- still need to check for overwriting bind
         local bind = keybindButton:GetText()
         if bind == L["Not Bound"] or bind == L["Recording"].."..." then
             commandPreviewIcon:SetNormalTexture("")
@@ -269,13 +279,14 @@ function addon:DrawEditorFrame()
 
         local bindType = typeDropDown.selected
         local command = commandEditBox:GetText()
+        local loadOnStartup = startupCheck:GetChecked()
 
         local valid, err = addon:ValidateBindings(bindType, command)
 
         if valid then
             if self.bind ~= bind then
                 if addon.db[frame.scrollFrame.scope].binds[bind] then
-                    local dialog = StaticPopup_Show("OVERBOUND_CONFIRM_OVERWRITE")
+                    local dialog = StaticPopup_Show("OVERBOUND_CONFIRM_OVERWRITE", bind)
                     if dialog then
                         dialog.data = editor
                         dialog.data2 = {bind, bindType, command}
@@ -286,7 +297,7 @@ function addon:DrawEditorFrame()
                 end
             end
 
-            editor:SaveBind(bind, bindType, command)
+            editor:SaveBind(bind, bindType, command, loadOnStartup)
 
             return true
         else

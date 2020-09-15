@@ -41,11 +41,13 @@ function addon:PLAYER_ENTERING_WORLD(event)
         return
     end
     self:SetBindings()
+    self:LoadStartupBindings()
 end
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function addon:PLAYER_REGEN_ENABLED(event)
     self:SetBindings()
+    self:LoadStartupBindings()
     self:UnregisterEvent(event)
 end

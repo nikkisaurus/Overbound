@@ -144,13 +144,10 @@ StaticPopupDialogs["OVERBOUND_CONFIRM_DELETE"] = {
     button1 = L["Yes"],
     button2 = L["No"],
     OnAccept = function(_, editor)
-        -- add confirmation here
         addon:DeleteBinding(editor.bind)
         addon.frame.scrollFrame:LoadBinds(addon.frame.scrollFrame.scope)
         editor:ClearEditor()
         editor:Hide()
-        -- addon:DeleteBinding(editor.bind)
-        -- editor:SaveBind(utils.unpack(bindData))
     end,
     timeout = 0,
     whileDead = true,

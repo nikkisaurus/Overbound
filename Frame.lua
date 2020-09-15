@@ -45,7 +45,6 @@ end
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function addon:DrawEditorFrame()
-
     local frame = self.frame
 
     local editor = GUI:CreateFrame(frame, {name = addonName.."EditorFrame", title = L["Editor"]})
@@ -58,7 +57,7 @@ function addon:DrawEditorFrame()
 
     local typeLabel = editor:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     typeLabel:SetText(L["Type"])
-    typeLabel:SetPoint("LEFT", 15, 0)
+    typeLabel:SetPoint("LEFT", 25, 0)
     typeLabel:SetPoint("TOP", editor.title, "BOTTOM", 0, -20)
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -95,7 +94,7 @@ function addon:DrawEditorFrame()
         },
     })
 
-    typeDropDown:SetPoint("LEFT", typeLabel, "RIGHT", 10, 0)
+    typeDropDown:SetPoint("LEFT", typeLabel, "RIGHT", 10, -5)
     typeDropDown.Button:Disable()
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --

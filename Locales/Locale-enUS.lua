@@ -26,6 +26,9 @@ L["Spell"] = true
 L["Type"] = true
 L["Update"] = true
 L["Yes"] = true
+
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
 L.OverwriteConfirmation = function()
     return "The bind \"%s\" already exists. Do you want to overwrite?"
 end

@@ -45,6 +45,7 @@ end
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 function addon:DrawEditorFrame()
+
     local frame = self.frame
 
     local editor = GUI:CreateFrame(frame, {name = addonName.."EditorFrame", title = L["Editor"]})
@@ -52,6 +53,8 @@ function addon:DrawEditorFrame()
     editor:SetPoint("TOPLEFT", frame, "TOPRIGHT", -1, 0)
     editor:SetSize(frame:GetWidth(), frame:GetHeight())
     editor:Hide()
+
+    editor.startupEnabled = {"MACROTEXT", "MACRO", "FUNCTION"}
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -62,11 +65,17 @@ function addon:DrawEditorFrame()
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-    local commandPreviewIcon, commandPreviewIcon, commandEditBox
+    local commandPreviewIcon, commandPreviewIcon, commandEditBox, startupCheck
     local typeDropDown = GUI:CreateDropDown(editor, {
         width = 150,
         SetValue = function(self, selected)
             editor:UpdateCommandPreviews(selected, commandEditBox:GetText())
+            if not tContains(editor.startupEnabled, selected) then
+                startupCheck:SetChecked(false)
+                startupCheck:Disable()
+            else
+                startupCheck:Enable()
+            end
         end,
         menu = {
             ACTION = {
@@ -106,9 +115,8 @@ function addon:DrawEditorFrame()
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-    local startupCheck = GUI:CreateCheckButton(editor, {label = L["Load on Startup"]})
+    startupCheck = GUI:CreateCheckButton(editor, {label = L["Load on Startup"]})
     startupCheck:SetPoint("LEFT", keybindButton, "RIGHT", 10, 0)
-
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -212,7 +220,10 @@ function addon:DrawEditorFrame()
         self.isEditing = true
         typeDropDown.Button:Enable()
         keybindButton:Enable()
-        startupCheck:Enable()
+        local bindData = self.bind and addon.db[frame.scrollFrame.scope].binds[self.bind]
+        if not self.bind or (bindData and tContains(editor.startupEnabled, bindData.bindType)) then
+            startupCheck:Enable()
+        end
         commandEditBox:Enable()
     end
 
@@ -230,7 +241,11 @@ function addon:DrawEditorFrame()
 
         typeDropDown:SetValue(bindData.bindType)
         keybindButton:SetText(bind)
-        startupCheck:SetChecked(bindData.loadOnStartup)
+
+        -- Have to enable it to set checked
+        startupCheck:Enable()
+        startupCheck:SetChecked(bindData.loadOnStartup and true or false)
+        startupCheck:Disable()
 
         editor:UpdateCommandPreviews(bindData.bindType, bindData.command)
 

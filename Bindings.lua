@@ -100,8 +100,6 @@ function addon:ValidateBindings(bindType, command)
         elseif not _G[command]:HasScript("OnClick") then
             error = L.ValidationErrors("invalidOnClick")
         end
-    elseif bindType == "FUNCTION" then
-        -- nada
     elseif bindType == "ITEM" then
         if not GetItemInfoInstant(command) then
             error = L.ValidationErrors("invalidItem")
@@ -110,8 +108,6 @@ function addon:ValidateBindings(bindType, command)
         if not GetMacroInfo(command) then
             error = L.ValidationErrors("invalidMacro")
         end
-    elseif bindType == "MACROTEXT" then
-        -- nada
     elseif bindType == "SPELL" then
         if not GetSpellInfo(command) then
             error = L.ValidationErrors("invalidSpell")
@@ -134,6 +130,27 @@ StaticPopupDialogs["OVERBOUND_CONFIRM_OVERWRITE"] = {
     OnAccept = function(_, editor, bindData)
         addon:DeleteBinding(editor.bind)
         editor:SaveBind(utils.unpack(bindData))
+    end,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,
+}
+
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+StaticPopupDialogs["OVERBOUND_CONFIRM_DELETE"] = {
+    text = L.DeleteConfirmation(),
+    button1 = L["Yes"],
+    button2 = L["No"],
+    OnAccept = function(_, editor)
+        -- add confirmation here
+        addon:DeleteBinding(editor.bind)
+        addon.frame.scrollFrame:LoadBinds(addon.frame.scrollFrame.scope)
+        editor:ClearEditor()
+        editor:Hide()
+        -- addon:DeleteBinding(editor.bind)
+        -- editor:SaveBind(utils.unpack(bindData))
     end,
     timeout = 0,
     whileDead = true,

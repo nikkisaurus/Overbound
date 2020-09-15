@@ -167,11 +167,11 @@ function addon:DrawEditorFrame()
             if editor.bind and editor.isEditing then
                 editor:LoadBind(editor.bind)
             elseif editor.bind then
-                -- add confirmation here
-                addon:DeleteBinding(editor.bind)
-                frame.scrollFrame:LoadBinds(frame.scrollFrame.scope)
-                editor:ClearEditor()
-                editor:Hide()
+                local dialog = StaticPopup_Show("OVERBOUND_CONFIRM_DELETE", frame.scrollFrame.scope, editor.bind)
+                if dialog then
+                    dialog.data = editor
+                    dialog.data2 = {editor.bind}
+                end
             else
                 editor:ClearEditor()
             end

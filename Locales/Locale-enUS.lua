@@ -33,6 +33,10 @@ L.OverwriteConfirmation = function()
     return "The bind \"%s\" already exists. Do you want to overwrite?"
 end
 
+L.DeleteConfirmation = function()
+    return "Do you really want to delete the %s bind \"%s\"?"
+end
+
 L.Tooltips = function(tip)
     local tips = {
         char = "Right-click to edit character keybinds.",

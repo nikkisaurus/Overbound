@@ -3,6 +3,7 @@
 ## Version 2.0
 
 -   Complete rewrite using AceGUI/AceConfig
+-   Remove all binding types except action, function, and macrotext (others are redundant and can be accomplished within these)
 
 ## Version 1.1
 

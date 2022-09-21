@@ -1,33 +1,15 @@
-#@retail@
-## Interface: 90001
-#@end-retail@
-#@non-retail@
-## Interface: 11304
-#@end-non-retail@
+
+## Interface: 100002
 ## Title: Overbound
 ## Notes: Override key binding manager.
 ## Author: Nikketa-Hyjal-US
 ## Version: @project-version@
-## SavedVariables: OverboundDB
+## SavedVariables: OverboundDB, OverboundDevDB
 ## X-Curse-Project-ID: 407138
 ## X-WoWI-ID: 25670
 
-# Libraries
-Libs\LibStub\LibStub.lua
-Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
-Libs\AceAddon-3.0\AceAddon-3.0.xml
-Libs\AceEvent-3.0\AceEvent-3.0.xml
-Libs\AceDB-3.0\AceDB-3.0.xml
-Libs\AceDBOptions-3.0\AceDBOptions-3.0.xml
-Libs\AceLocale-3.0\AceLocale-3.0.xml
-Libs\AceConsole-3.0\AceConsole-3.0.xml
-Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
-Libs\LibAddonUtils\LibAddonUtils.xml
-Libs\LibAddonGUI\LibAddonGUI.xml
-
-# Locales
-Locales\Locale-enUS.lua
-
-Core.lua
+Libs\embeds.xml
+Locales\embeds.xml
+Overbound.lua
 Bindings.lua
-Frame.lua
+Options.lua

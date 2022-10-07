@@ -1,0 +1,18 @@
+## Interface: 90207
+## Interface-Wrath: 30400
+
+## Title: Overbound
+## Notes: Override key binding manager.
+## Author: Nikketa-Hyjal-US
+## Version: @project-version@
+## SavedVariables: OverboundDB, OverboundDevDB
+
+## X-Curse-Project-ID: 407138
+## X-WoWI-ID: 25670
+## X-Wago-ID: WYK9l36L
+
+Libs\embeds.xml
+Locales\embeds.xml
+Overbound.lua
+Bindings.lua
+Options.lua

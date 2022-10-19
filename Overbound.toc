@@ -11,7 +11,7 @@
 ## X-WoWI-ID: 25670
 ## X-Wago-ID: WYK9l36L
 
-Libs\embeds.xml
+libs.xml
 Locales\embeds.xml
 Overbound.lua
 Bindings.lua

@@ -13,13 +13,13 @@ function private:BindButtonFrame(info, func)
 	local button =
 		CreateFrame("Button", "OverboundButtons" .. private.numButtons, UIParent, "SecureActionButtonTemplate")
 	button:EnableMouse(true)
-	button:RegisterForClicks("AnyDown")
+	button:RegisterForClicks("AnyUp", "AnyDown")
 
 	button:SetAttribute("type1", info.type == "func" and "click" or info.type == "macrotext" and "macro")
 	if info.type == "func" then
 		button:SetScript("PostClick", func)
 	elseif info.type == "macrotext" then
-		button:SetAttribute("macrotext", info.input)
+		button:SetAttribute("macrotext1", info.input)
 	end
 	SetOverrideBindingClick(private.frame.frame, true, info.keybind, button:GetName())
 

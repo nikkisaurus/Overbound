@@ -1,5 +1,14 @@
 # Overbound
 
+## Version 2.0.2
+
+-   Fix libraries
+-   Update TOC
+
+## Version 2.0.1
+
+-   Update TOC
+
 ## Version 2.0
 
 -   Complete rewrite using AceGUI/AceConfig

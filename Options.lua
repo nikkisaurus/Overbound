@@ -149,7 +149,7 @@ function private:GetBindingOptions(Type)
 					order = 2,
 					type = "input",
 					width = "full",
-					multiline = true,
+					multiline = 15,
 					name = L["Input"],
 					get = function()
 						return info.input
